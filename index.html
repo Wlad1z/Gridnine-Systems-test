@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/main.css">
+</head>
+<body>
+    <aside>
+        <div class="filters">
+            
+            <div>
+                <p><strong>Сортировать</strong></p>
+                <div>   
+                    <input onclick="updateSort('priceRise')" type="radio" name="sort" id="sort-price-rise"><label for="sort-price-rise">по возрастанию цены</label>
+                </div>
+                <div>
+                    <input onclick="updateSort('priceLow')" type="radio" name="sort" id="sort-price-low"><label for="sort-price-low">по убыванию цены</label>
+                </div>
+                <div>
+                    <input onclick="updateSort('duration')" type="radio" name="sort" id="sort-time"><label for="sort-time">по времени в пути</label>
+                </div>
+            </div>
+
+            
+            <div id="filter-trafnsfer">
+                <p><strong>Фильтровать</strong></p>
+                
+            </div>
+
+            
+            <div>
+                <p><strong>Цена</strong></p>
+                <div>
+                    От <input type="number" name="min-price" id="min-price">
+                </div>
+                <div>
+                    До <input type="number" name="max-price" id="max-price">
+                </div>
+                
+            </div>
+
+            <div id="filters-carrier">
+                <p><strong>Авиакомпании</strong></p>
+            </div>
+        </div>
+    </aside>
+    <main>
+        <div id="flights" class="flights">
+            
+        </div>
+    </main>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

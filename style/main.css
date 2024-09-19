@@ -1,0 +1,129 @@
+body{
+    margin: 0 5%;
+    padding: 0;
+    display: flex;
+    font-family: sans-serif;
+    justify-content: space-between;
+}
+
+aside{
+    width: 20%;
+    padding: 20px 0;
+}
+
+label, input{
+    cursor: pointer;
+}
+
+aside .filters{
+    position: fixed;
+    width: 15%;
+    font-size: 16px;
+}
+
+aside input[type=number]{
+    margin-bottom: 10px;
+}
+
+aside #filters-carrier div{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+main{
+    width: 79%;
+}
+
+main .flight{
+    margin-bottom: 20px;
+}
+
+main .flight .header-flight{
+    display: flex;
+    justify-content: space-between;
+    background: #0087C9;
+    color: white;
+    padding: 5px 20px;
+}
+
+main .flight .header-flight .logo img {
+    height: 50px;
+}
+
+main .flight .header-flight .price{
+    text-align: right;
+    
+
+    span:nth-child(1){
+        font-size: 20px;
+    }
+
+    span:nth-child(3){
+        font-size: 12px;
+    }
+}
+
+main .flight .segment{
+    margin: 0 10px;
+}
+
+main .flight .segment:nth-child(2){
+    border-bottom: 2px solid #0087C9;
+}
+
+main .flight .flight-main .departureAirport span,
+main .flight .flight-main .arrivalAirport span{
+    color: #0087C9;
+}
+
+main .flight .flight-main .leg{
+    border-bottom: 1px solid lightgray;
+    padding: 10px 0;
+    margin: 10px 0;
+}
+
+main .flight .flight-main .date{
+    display: flex;
+    justify-content: space-between;
+}
+
+main .flight .flight-main .date .date-hour{
+    font-size: 20px;
+}
+
+main .flight .flight-main .date .date-day{
+    color: #0087C9;
+}
+
+main .flight .flight-main .transfer{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main .flight .flight-main .transfer span{
+    margin: 0 10px;
+}
+
+main .flight .flight-main .transfer div{
+    width: 35%;
+    height: 1px;
+    background: lightgray;
+}
+
+main .flight .flight-main .carrier{
+    margin: 10px;
+}
+
+main .flight button{
+    display: block;
+    height: 40px;
+    background: #FFB168;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    color: white;
+    text-transform: uppercase;
+}
