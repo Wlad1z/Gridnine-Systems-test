@@ -53,7 +53,7 @@ fetch('./test/flights.json')
             });
         });
     })
-    .catch(error => console.error('Error loading flights:', error));
+    .catch(error => console.error('Ошибка:', error));
 
 
 function createMain(arr){
