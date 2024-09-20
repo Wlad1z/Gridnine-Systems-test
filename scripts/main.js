@@ -58,74 +58,81 @@ fetch('./test/flights.json')
 
 function createMain(arr){
     flightsDiv.innerHTML = '';
-    arr.forEach(element => {
+    if(arr.length == 0) {
         const div = document.createElement('div');
-        div.className = 'flight';
-        
-        const legs = element.flight.legs;
-        let segmentHTML = '';
-
-        legs.forEach((leg) => {
-
-            const departureSegment = leg.segments[0];
-            const arrivalSegment = leg.segments[leg.segments.length - 1];
-            const departureCity = departureSegment.departureCity ? departureSegment.departureCity.caption +',' : ' ';
-            const departureAirport = departureSegment.departureAirport.caption;
-            const departureAirportUid = departureSegment.departureAirport.uid;
-            const arrivalCity = arrivalSegment.arrivalCity ? arrivalSegment.arrivalCity.caption+',' : ' ';
-            const arrivalAirport = arrivalSegment.arrivalAirport.caption;
-            const arrivalAirportUid = arrivalSegment.arrivalAirport.uid;
-            carriers.add(element.flight.carrier.caption);
-            transits.add(leg.segments.length == 1 ? 'Без пересадок' : getDeclension(leg.segments.length-1, ["пересадка", "пересадки", "пересадок"]));
-
-            segmentHTML += `
-                <div class="segment">
-                    <div class="flight-main">
-                        <div class="leg">
-                            <span class="departureAirport">${departureCity} ${departureAirport} <span>(${departureAirportUid}) ➜ </span></span>
-                            <span class="arrivalAirport">${arrivalCity} ${arrivalAirport} <span>(${arrivalAirportUid})</span></span>
-                        </div>
-                        <div class="date">
-                            <div class="departure">
-                                <span class="date-hour">${new Date(departureSegment.departureDate).toLocaleString("ru" , optionsHour)}</span> <span class="date-day">${new Date(departureSegment.departureDate).toLocaleString("ru", optionsDay)} ${new Date(departureSegment.departureDate).toLocaleString("ru", optionsWeekday)}</span>
+        div.innerHTML = "<p>Полетов по заданным параметрам нет.</p>";
+        flightsDiv.appendChild(div);
+    } else {
+        arr.forEach(element => {
+            const div = document.createElement('div');
+            div.className = 'flight';
+            
+            const legs = element.flight.legs;
+            let segmentHTML = '';
+    
+            legs.forEach((leg) => {
+    
+                const departureSegment = leg.segments[0];
+                const arrivalSegment = leg.segments[leg.segments.length - 1];
+                const departureCity = departureSegment.departureCity ? departureSegment.departureCity.caption +',' : ' ';
+                const departureAirport = departureSegment.departureAirport.caption;
+                const departureAirportUid = departureSegment.departureAirport.uid;
+                const arrivalCity = arrivalSegment.arrivalCity ? arrivalSegment.arrivalCity.caption+',' : ' ';
+                const arrivalAirport = arrivalSegment.arrivalAirport.caption;
+                const arrivalAirportUid = arrivalSegment.arrivalAirport.uid;
+                carriers.add(element.flight.carrier.caption);
+                transits.add(leg.segments.length == 1 ? 'Без пересадок' : getDeclension(leg.segments.length-1, ["пересадка", "пересадки", "пересадок"]));
+    
+                segmentHTML += `
+                    <div class="segment">
+                        <div class="flight-main">
+                            <div class="leg">
+                                <span class="departureAirport">${departureCity} ${departureAirport} <span>(${departureAirportUid}) ➜ </span></span>
+                                <span class="arrivalAirport">${arrivalCity} ${arrivalAirport} <span>(${arrivalAirportUid})</span></span>
                             </div>
-                            <div class="time">
-                                ${getTime(Date.parse(arrivalSegment.arrivalDate) - Date.parse(departureSegment.departureDate))}
-
+                            <div class="date">
+                                <div class="departure">
+                                    <span class="date-hour">${new Date(departureSegment.departureDate).toLocaleString("ru" , optionsHour)}</span> <span class="date-day">${new Date(departureSegment.departureDate).toLocaleString("ru", optionsDay)} ${new Date(departureSegment.departureDate).toLocaleString("ru", optionsWeekday)}</span>
+                                </div>
+                                <div class="time">
+                                    ${getTime(Date.parse(arrivalSegment.arrivalDate) - Date.parse(departureSegment.departureDate))}
+    
+                                </div>
+                                <div class="arrival">
+                                    <span class="date-day">${new Date(arrivalSegment.arrivalDate).toLocaleString("ru", optionsDay)} ${new Date(arrivalSegment.arrivalDate).toLocaleString("ru", optionsWeekday)}</span> <span class="date-hour">${new Date(arrivalSegment.arrivalDate).toLocaleString("ru" , optionsHour)}</span> 
+                                </div>
                             </div>
-                            <div class="arrival">
-                                <span class="date-day">${new Date(arrivalSegment.arrivalDate).toLocaleString("ru", optionsDay)} ${new Date(arrivalSegment.arrivalDate).toLocaleString("ru", optionsWeekday)}</span> <span class="date-hour">${new Date(arrivalSegment.arrivalDate).toLocaleString("ru" , optionsHour)}</span> 
+                            <div class='transfer'> 
+                                <div></div>
+                                <span>${leg.segments.length == 1 ? 'Без пересадок' : getDeclension(leg.segments.length-1, ["пересадка", "пересадки", "пересадок"])}</span>
+                                <div></div>
+                            </div>
+                            <div class="carrier">
+                                Рейс выполняет: ${departureSegment.airline.caption}
                             </div>
                         </div>
-                        <div class='transfer'> 
-                            <div></div>
-                            <span>${leg.segments.length == 1 ? 'Без пересадок' : getDeclension(leg.segments.length-1, ["пересадка", "пересадки", "пересадок"])}</span>
-                            <div></div>
+                    </div>`;
+                });
+    
+                div.innerHTML = `
+                    <div class="header-flight">
+                        <div class="logo">
+                            <img src="https://content.airhex.com/content/logos/airlines_${element.flight.carrier.airlineCode}_350_100_r.png" alt="">
                         </div>
-                        <div class="carrier">
-                            Рейс выполняет: ${departureSegment.airline.caption}
+                        <div class="price">
+                            <span>${formatter.format(element.flight.price.passengerPrices[0].total.amount)} ₽</span><br>
+                            <span>Стоимость для одного ${element.flight.price.passengerPrices[0].passengerType.caption == 'Взрослый' ? 'взрослого' : 'детского'} пассажира</span>
                         </div>
                     </div>
-                </div>`;
-            });
-
-            div.innerHTML = `
-                <div class="header-flight">
-                    <div class="logo">
-                        <img src="https://content.airhex.com/content/logos/airlines_${element.flight.carrier.airlineCode}_350_100_r.png" alt="">
-                    </div>
-                    <div class="price">
-                        <span>${formatter.format(element.flight.price.passengerPrices[0].total.amount)} ₽</span><br>
-                        <span>Стоимость для одного ${element.flight.price.passengerPrices[0].passengerType.caption == 'Взрослый' ? 'взрослого' : 'детского'} пассажира</span>
-                    </div>
-                </div>
-                ${segmentHTML}
-                <button>Выбрать</button>
-            `;
-
-            flightsDiv.appendChild(div);
-        }
-    );
+                    ${segmentHTML}
+                    <button>Выбрать</button>
+                `;
+    
+                flightsDiv.appendChild(div);
+            }
+        );
+    }
+    
 }
 
 const filterState = {
